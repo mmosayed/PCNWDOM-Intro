@@ -1,8 +1,7 @@
 const playlist = {
   name: 'United States Top 10',
   description: 'The top songs in the US right now.',
-  songs: [
-    {
+  songs: [{
       name: 'thank u, next',
       artists: ['Ariana Grande'],
       image: 'https://i.scdn.co/image/3492042deca1ed9a02e6d46ebe58807bbf8d2a51'
@@ -69,3 +68,76 @@ const playlist = {
     }
   ]
 };
+
+const objectToHTML = (song) => {
+  return `<div class='row mb-2'>
+  <div class='col-1'>
+    <img src="${song.image}" class="rounded" style='width: 50px; height: 50px;'>
+  </div>
+  <div class='col-11'>
+    <p class='mb-0 mt-1 song-name'>${song.name}</p>
+    <p class='my-0 song-artists'>${song.artists}</p>
+  </div>
+</div>`;
+}
+
+const render = (playlist) => {
+
+  const title = document.querySelector('h1')
+  title.innerText = playlist.name;
+
+  const song_list = document.querySelector('.song-list');
+
+  const lead = document.querySelector('.lead');
+  lead.innerText = playlist.description;
+
+  let combinedHTML = '';
+
+  for (let i = 0; i < playlist.songs.length; i++) {
+    combinedHTML += objectToHTML(playlist.songs[i])
+  }
+
+  song_list.innerHTML = combinedHTML;
+}
+
+render(playlist);
+
+const input = document.querySelector('.js-input')
+
+input.addEventListener('input', () => {
+
+  let arr = [];
+  let newPlayList = {};
+
+  for (let i = 0; i < playlist.songs.length; i++) {
+
+    let songName = playlist.songs[i].name;
+    let artists = playlist.songs[i].artists
+
+    if (songName.toLowerCase().includes(input.value.toLowerCase()) === true) {
+      arr.push(playlist.songs[i]);
+    } else {
+      for (let b = 0; b < artists.length; b++) {
+
+        if (artists[b].toLowerCase().includes(input.value.toLowerCase()) === true) {
+          arr.push(playlist.songs[i]);
+        }
+
+      }
+    }
+
+  }
+
+  newPlayList['songs'] = arr;
+  newPlayList['name'] = playlist.name;
+  newPlayList['description'] = playlist.description;
+  render(newPlayList);
+
+});
+
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    input.value = '';
+  }
+  render(playlist);
+});
