@@ -21,3 +21,20 @@ body {
 .row:hover {
   background-color: #383838;
 }
+
+.searchBar {
+  width: 42%;
+  border-radius: 15px;
+  border: 1px #000 solid;
+  padding: 5px 5px 5px 10px;
+  z-index: 10;
+  border-radius: 25px;
+  border: none;
+
+}
+
+.jumbotron{
+  padding-bottom: 0;
+  margin-bottom : 2%;
+
+}

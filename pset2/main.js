@@ -66,6 +66,68 @@ const playlist = {
       name: 'All I Want for Christmas Is You',
       artists: ['Mariah Carey'],
       image: 'https://i.scdn.co/image/770180da03a8e23ac5ff7847496e9538cf73ce85'
+    },
+    {
+      name: 'All I Want for Christmas Is You',
+      artists: ['Mariah Carey'],
+      image: 'https://i.scdn.co/image/770180da03a8e23ac5ff7847496e9538cf73ce85'
     }
+  
   ]
 };
+
+const objectToHTML = (song) => {
+  return `<div class='row mb-2'>
+  <div class='col-1'>
+    <img src="${song.image}" class="rounded" style='width: 50px; height: 50px;'>
+  </div>
+  <div class='col-11'>
+    <p class='mb-0 mt-1 song-name'>${song.name}</p>
+    <p class='my-0 song-artists'>${song.artists}</p>
+  </div>
+</div>`;
+}
+
+const render = (playlist) => {
+
+  const title = document.querySelector('h1');
+  title.innerText = playlist.name;
+
+  const desc = document.querySelector('.lead');
+  desc.innerText = playlist.description;
+
+  const song_list = document.querySelector('.song-list');
+
+  let combinedHTML = '';
+  for (let i = 0; i < playlist.songs.length; i++) {
+    combinedHTML += objectToHTML(playlist.songs[i]);
+  }
+
+  song_list.innerHTML = combinedHTML;
+}
+
+render(playlist);
+const input = document.querySelector('.js-input')
+input.addEventListener('input', e =>{
+
+  //  const val = e.target.value.toLowerCase();
+  const tt = input.value.toLowerCase();
+
+  const newPlaylist = {
+  }
+
+  const songs = []
+
+   for(let i = 0 ; i< playlist.songs.length ; i++){
+    if(playlist.songs[i].name.toLowerCase().includes(tt)){
+        songs.push(playlist.songs[i]);
+    }
+   }
+
+  newPlaylist.name = 'United States Top 10';
+  newPlaylist.description = 'The top songs in the US right now.';
+  newPlaylist.songs = songs
+  console.log(newPlaylist)
+  render(newPlaylist)
+
+})
