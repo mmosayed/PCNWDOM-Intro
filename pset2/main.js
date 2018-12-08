@@ -69,3 +69,70 @@ const playlist = {
     }
   ]
 };
+
+const h1 = document.querySelector("h1");   //selected h1 tag
+h1.innerHTML = playlist.name;  // changed the html cotents inside html element
+
+const p = document.querySelector("p")  // selected p tag
+p.innerHTML = playlist.description;  // changed the html contents inside  html element
+
+
+const songs = playlist.songs;   // selecting property of playlist object returning array
+
+const song_list = document.querySelector('.song-list') //  selecting a div
+
+for (let i = 0; i < songs.length; i++) {  // creating object loop for the songss
+  const name = songs[i].name;  // selecting song name
+  const artist = songs[i].artists; // selecting song artist
+  const image = songs[i].image; // selecting song image
+  
+
+  
+  const html_tags = `<div class='row mb-2'> 
+        <div class='col-1'>
+          <img src="${image}" class="rounded" style='width: 50px; height: 50px;'>
+        </div>
+        <div class='col-11'>
+          <p class='mb-0 mt-1 song-name'>${name}</p>
+          <p class='my-0 song-artists'>${artist}</p>
+        </div>
+      </div>` //modifying a section of code that is going to render each song on the webpage
+
+      song_list.innerHTML += html_tags; // modifying the parent element to add songs
+}
+
+const div = document.querySelector('.jumbotron');
+const input = document.createElement('input');   //<input>
+input.setAttribute('type','search');;
+input.setAttribute('placeholder','enter song info')
+//console.log(input)
+
+div.appendChild(input);
+//console.log(div)
+
+
+input.addEventListener('keydown', response =>{
+  const key = response.target.value
+  console.log(response);
+  
+  let combinedhtml = ''
+  for (let i = 0; i < songs.length; i++) {  // creating object loop for the songss
+    const name = songs[i].name;  // selecting song name
+    const artist = songs[i].artists; // selecting song artist
+    const image = songs[i].image; // selecting song image
+
+    if(name.toLowerCase().includes(key.toLowerCase())){
+      combinedhtml +=   `<div class='row mb-2'> 
+        <div class='col-1'>
+          <img src="${image}" class="rounded" style='width: 50px; height: 50px;'>
+        </div>
+        <div class='col-11'>
+          <p class='mb-0 mt-1 song-name'>${name}</p>
+          <p class='my-0 song-artists'>${artist}</p>
+        </div>
+      </div>`
+      song_list.innerHTML = combinedhtml;
+    }
+  }
+
+})
